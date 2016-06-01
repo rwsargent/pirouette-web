@@ -1,0 +1,19 @@
+.left {
+    border : 2px #9C1A1C;
+    width : 250px;
+    height: 250px;
+    text-align: center;
+    background-color: teal;
+}
+
+.right {
+    background-color: pink;
+    border-color : blue;
+    border-width: 2px;
+    border-width: 2px;
+    border : 2px;
+    border-style: solid;
+    text-align: center;
+    width: 250px;
+    height: 250px;
+}

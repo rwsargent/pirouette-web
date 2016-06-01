@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='public/css/styles.css') }}"/>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.min.js"></script>
+        <script src="{{ url_for('static', filename="public/js/leftright.js")}}"></script>
+  </head>
+  <body>
+    <div class="arrow-container">
+        <div class="left" onmousedown="left()" onmouseup="stop()">Left</div>
+        <div class="right" onmousedown="right()" onmouseup="stop()">Right</div>
+    </div>
+  </body>
+</html>

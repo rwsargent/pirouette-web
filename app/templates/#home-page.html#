@@ -1,0 +1,7 @@
+{% extends "base.html"%}
+{% block content %}
+<div class="arrow-container">
+  <div class="left">Left</div>
+  <div class="right">Right</div>
+</div>
+{% endblock %}
