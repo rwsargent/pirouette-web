@@ -1,8 +1,7 @@
 # Import flask and template operators
 from flask import Flask, render_template
-from flask.ext.socketio import SocketIO, emit
-from socket_layer import connect_to_pi
-
+from flask_socketio import SocketIO
+import socket_layer as pi_socket
 
 # Define the WSGI application object
 app = Flask(__name__)
@@ -16,7 +15,7 @@ app.config.from_object('config')
 # def not_found(error):
 #     return render_template('404.html'), 404
 
-pi_socket = connect_to_pi()
+pi_socket.connect_to_pi()
 
 
 @app.route("/")
@@ -42,7 +41,6 @@ def on_ws_error(message):
 @ws.on('stop', namespace='/pir')
 def stop(message):
     pi_socket.send("STOP")
-
 
 
 @ws.on('left', namespace="/pir")
