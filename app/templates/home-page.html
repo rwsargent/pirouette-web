@@ -2,14 +2,40 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='public/css/styles.css') }}"/>
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.min.js"></script>
-        <script src="{{ url_for('static', filename="public/js/leftright.js")}}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.6/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename="public/js/leftright.js")}}"></script>
   </head>
   <body>
-    <div class="arrow-container">
-        <div class="left" onmousedown="left()" onmouseup="stop()">Left</div>
-        <div class="right" onmousedown="right()" onmouseup="stop()">Right</div>
+
+    <div id="content" class="container">
+      <div class="smlogo">
+        <img src="{{url_for('static', filename="public/images/Logo_samplemindedfliptrans_opacity40.png")}}"></img>
+      </div>
+      
+      <div class="logoholder">
+        <div class="centeredlogo rightside">
+          <h1>Pirouette</h1>
+        </div>
+      </div>
+      
+      <div id="name"  class="appTitle dismissed">
+        <h1 id="pageTitle"></h1>
+        <h2 id="subTitle"></h2>
+      </div>
+      
+      <div id="template-insertion">
+        <div class="arrow-row">
+          <div class="circle left" id="left-arrow" style="display: block; opacity: 1;">
+            <div class="circle circle-left"></div>
+          </div>
+          
+          <div class="circle right" id="right-arrow" style="display: block; opacity: 1;">
+            <div class="circle circle-right"></div>
+          </div>
+        </div>
+      </div>
+      
     </div>
   </body>
 </html>
