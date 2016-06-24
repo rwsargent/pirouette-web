@@ -16,35 +16,41 @@ def valid_socket():
         return not socket_error
 
 
-def connect_to_pi():
+def connect_to_pi(from_thread = True):
     host = PI_HOST
     port = PI_PORT
-    global socket_handle, socket_error
-    try:
-        with error_lock:
-            socket_handle = socket.socket()
-            socket_handle.connect((host, port))
-            socket_error = False
-        return True
-    except socket.error, e:
-        print(str(e))
-        with error_lock:
-            socket_error = True
-        return False
+    global socket_handle
+    with reconnect_lock:
+        try:
+            print("Trying to connect to pi...")
+                socket_handle = socket.socket()
+                socket_handle.connect((host, port))
+                print("Connected to Pi")
+                send("Web Server connected...")
+                socket_error = False
+                return True
+        except socket.error, e:
+            print(str(e))
+            if not from_thread:
+                retry_connection_thread()
+            return False
 
 
 def send(msg):
     global socket_error
-    bytes_sent = 0
     with reconnect_lock:
-        while bytes_sent < len(msg):
-            sent = socket_handle.send(msg[bytes_sent:])
-            if sent == 0:
-                print("this failed for whatever reason")
+        try:
+            bytes_sent = socket_handle.send(msg)
+            if bytes_sent == 0:
+                print("The send failed, sent zero bytes to pi.")
                 with error_lock:
                     socket_error = True
-                return
-            bytes_sent = bytes_sent + sent
+                    return
+        except IOError as err:
+            if err.errno == 32:
+                emit("pidisconnect", "Broken pipe to pi", namespace='/pir')
+                print("Broken pipe, attempting to reconnect...")
+                retry_connection_thread()
 
 
 def retry_connection_thread():
@@ -53,6 +59,7 @@ def retry_connection_thread():
         with reconnect_lock:
             socket_handle.close()
             while not connect_to_pi():
+                print("Attempting to reconnect")
                 time.sleep(4)
-            emit("reconnected", "RECONNECTED", namespace='/pir')
+            emit("pireconnect", "Pi reconnected", namespace='/pir')
     Thread(target=try_connect_on_interval).start()

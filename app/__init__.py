@@ -15,8 +15,7 @@ app.config.from_object('config')
 # def not_found(error):
 #     return render_template('404.html'), 404
 
-pi_socket.connect_to_pi()
-
+pi_socket.connect_to_pi(from_thread = False)
 
 @app.route("/")
 def home():
@@ -25,12 +24,12 @@ def home():
 
 @ws.on('connect', namespace="/pir")
 def on_connect():
-    print("connected")
+    print("Web socket connected.")
 
 
 @ws.on('disconnect', namespace="/pir")
 def on_disconnect():
-    print("disconnected")
+    print("Web socket disconnected")
 
 
 @ws.on_error()
@@ -53,3 +52,4 @@ def turn_left(message):
 def turn_right(message):
     pi_socket.send("RIGHT")
     print("Turn right " + str(message))
+    

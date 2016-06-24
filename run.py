@@ -1,4 +1,5 @@
-from app import app, ws
+#from app import app, ws
+import app as pirouette
 
 # app.run(host='localhost', port=8080, debug=True)
-ws.run(app)
+pirouette.ws.run(pirouette.app)

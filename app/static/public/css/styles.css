@@ -22,7 +22,7 @@
 }
 
 .centeredlogo {
-  background: #FFFFFF center center url("../images/samplemindedstackedlogo.png");
+//  background: #FFFFFF center center url("../images/samplemindedstackedlogo.png");
   background-size: 100%;
   background-repeat: no-repeat;
   display: block;
@@ -117,9 +117,9 @@ body {
 }
 
 .arrow-row {
-    padding-left: 10%;
-    padding-right: 10%;
-    height : 300px;
+    margin: 0 auto;
+    width: 375px;
+    height: 300px;
 }
 
 .pulsate {
@@ -162,4 +162,8 @@ body {
 
   to {
       opacity: 1; }
+}
+
+.error {
+    border-color: #F00;
 }
