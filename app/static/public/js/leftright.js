@@ -27,6 +27,10 @@ function setupSockets() {
     socket.on('connect', function() {
         console.log("Socket IO connected to web server.");
     });
+    
+    socket.on('success', function() {
+        $(".container").removeClass("error");
+    });
 
     socket.on('pireconnect', function(msg) {
         console.log("We're back, baby. (Message: " + str(msg) + ")");
@@ -45,6 +49,8 @@ $(document).ready(function() {
     var $left = $(".circle.left");
     var $right = $(".circle.right");
 
+    var keydown = false;
+
     $left.on('mousedown', function(event) {
         left();
         $left.addClass("pulsate");
@@ -57,17 +63,21 @@ $(document).ready(function() {
     
     window.addEventListener('keydown', function(event) {
         var code = event.keyCode;
-        if(code === 37) {
-            left();
-            $left.addClass("pulsate");
-        } else if (code === 39) {
-            right();
-            $right.addClass("pulsate");
+        if(!keydown) {
+            keydown = true;
+            if(code === 37) {
+                left();
+                $left.addClass("pulsate");
+            } else if (code === 39) {
+                right();
+                $right.addClass("pulsate");
+            }
         }
     }, false);
 
     var done = function(event) {
         var code = event.keyCode;
+        keydown = false;
         if(code === 37) {
             stop();
         } else if (code === 39) {

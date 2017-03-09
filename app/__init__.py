@@ -10,12 +10,11 @@ ws = SocketIO(app)
 # Configurations
 app.config.from_object('config')
 
-# Sample HTTP error handling
-# @app.errorhandler(404)
-# def not_found(error):
-#     return render_template('404.html'), 404
+pi_socket.launch_listen_thread()
 
-pi_socket.connect_to_pi(from_thread = False)
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
 
 @app.route("/")
 def home():
@@ -39,17 +38,16 @@ def on_ws_error(message):
 
 @ws.on('stop', namespace='/pir')
 def stop(message):
-    pi_socket.send("STOP")
+    pi_socket.send("STOP\n")
 
 
 @ws.on('left', namespace="/pir")
 def turn_left(message):
-    pi_socket.send("LEFT")
+    pi_socket.send("LEFT\n")
     print("Turn left " + str(message))
 
 
 @ws.on('right', namespace="/pir")
 def turn_right(message):
-    pi_socket.send("RIGHT")
+    pi_socket.send("RIGHT\n")
     print("Turn right " + str(message))
-    

@@ -4,7 +4,7 @@ import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # Statement for enabling the development environment
-DEBUG = True
+DEBUG = False
 
 # Application threads. A common general assumption is
 # using 2 per available processor cores - to handle
@@ -21,3 +21,6 @@ CSRF_SESSION_KEY = "secret"
 
 # Secret key for signing cookies
 SECRET_KEY = "secret"
+
+USE_RELOADER = False
+
